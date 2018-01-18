@@ -52,7 +52,7 @@ node {
   if( triggerBuild(CONTEXT_DIRECTORY) ) {
     stage('build ' + BUILD_CONFIG) {
       echo "Building: " + BUILD_CONFIG
-      openshiftBuild bldCfg: BUILD_CONFIG, showBuildLogs: 'true'
+      openshiftBuild bldCfg: BUILD_CONFIG, showBuildLogs: 'true', checkForTriggeredDeployments: 'true'
 
       // the CHAINED_BUILD_CONFIG should be triggered when the above build completes. We want to wait for it before doing any tagging.
       openshiftVerifyBuild bldCfg: CHAINED_BUILD_CONFIG
