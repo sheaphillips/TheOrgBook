@@ -57,6 +57,12 @@ node {
       // the CHAINED_BUILD_CONFIG should be triggered when the above build completes. We want to wait for it before doing any tagging.
       openshiftVerifyBuild bldCfg: CHAINED_BUILD_CONFIG
 
+      // the CHAINED_BUILD_CONFIG should be triggered when the above build completes, but it doesn't seem to be, so we trigger it explicitly.
+      openshiftBuild bldCfg: CHAINED_BUILD_CONFIG, showBuildLogs: 'true', checkForTriggeredDeployments: 'true'
+
+      // then check it for fun.
+      openshiftVerifyBuild bldCfg: CHAINED_BUILD_CONFIG
+
       // Don't tag with BUILD_ID so the pruner can do it's job; it won't delete tagged images.
       // Tag the images for deployment based on the image's hash
       IMAGE_HASH = sh (
